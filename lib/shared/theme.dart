@@ -6,11 +6,8 @@ Color blackColor = const Color(0xff14193F);
 Color greyColor = const Color(0xffA4A8AE);
 Color lightBackgroundColor = const Color(0xffF6F8FB);
 Color darkBackgroundColor = const Color(0xff020518);
-Color blueColor = const Color(0xff53C1F9);
-Color puprleColor = const Color(0xff5142E6);
-Color greenColor = const Color(0xff22B07D);
-Color numberBackgroundColor = const Color(0xff1A1D2E);
-Color redColor = const Color(0XFFFF2566);
+Color primaryColor = const Color(0xff2563EB);
+Color primaryDarkColor = const Color(0xff004AC6);
 
 TextStyle blackTextStyle = GoogleFonts.poppins(
   color: blackColor,
@@ -22,13 +19,8 @@ TextStyle whiteTextStyle = GoogleFonts.poppins(
 TextStyle greyTextStyle = GoogleFonts.poppins(
   color: greyColor,
 );
-TextStyle blueTextStyle = GoogleFonts.poppins(
-  color: blueColor,
-);
 
-TextStyle greenTextStyle = GoogleFonts.poppins(
-  color: greenColor,
-);
+TextStyle primaryDarkTextStyle = GoogleFonts.poppins(color: primaryDarkColor);
 
 FontWeight light = FontWeight.w300;
 FontWeight regular = FontWeight.w400;
