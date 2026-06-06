@@ -1,9 +1,13 @@
 import 'package:ceritakita/shared/app_image.dart';
 import 'package:ceritakita/shared/theme.dart';
-import 'package:ceritakita/widgets/widgets.dart';
+import 'package:ceritakita/views/register_view.dart';
+import 'package:ceritakita/views/widgets/forms.dart';
+import 'package:ceritakita/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginView extends StatefulWidget {
+  static const appRoute = '/login';
   const LoginView({super.key});
 
   @override
@@ -11,26 +15,105 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsetsGeometry.symmetric(vertical:
-        95, horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            AppImage.logo.image(width: 122),
-            const SizedBox(height: 24),
-            Text("Welcome Back", style: blackTextStyle.copyWith(color: blackColor, fontWeight: bold, fontSize: 28)),
-            const SizedBox(height: 4),
-            Text("Sign in to Continue", style: blackTextStyle.copyWith(color: blackColor, fontWeight: regular, fontSize: 17)),
-            const SizedBox(height: 16),
-            CustomFilledButton(title: "Login")
-          ],
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                AppImage.logo.image(width: 122),
+                const SizedBox(height: 24),
+                Text(
+                  "Hello There!",
+                  style: blackTextStyle.copyWith(
+                    color: blackColor,
+                    fontWeight: bold,
+                    fontSize: 28,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Sign in to Continue",
+                  style: blackTextStyle.copyWith(
+                    color: blackColor,
+                    fontWeight: regular,
+                    fontSize: 17,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                CustomFormField(
+                  title: "Email Address",
+                  hintText: "john.dave@gmail.com",
+                  keyBoardType: TextInputType.emailAddress,
+                  controller: _emailController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Email is required';
+                    }
+                    if (!RegExp(
+                      r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$',
+                    ).hasMatch(value)) {
+                      return 'Enter a valid email';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 16),
+                CustomFormField(
+                  title: "Password",
+                  hintText: "",
+                  isPasswordField: true,
+                  keyBoardType: TextInputType.visiblePassword,
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Password is required';
+                    }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 24),
+                CustomFilledButton(
+                  title: "Login",
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // proceed with login
+                    }
+                  },
+                ),
+                const Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Don't have an account? "),
+                    CustomTextButton(title: "Register", onPressed: () {
+                      context.push(RegisterView.appRoute);
+                    },),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
