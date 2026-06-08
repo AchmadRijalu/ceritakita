@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of 'views.dart';
 
 class StoriesView extends StatefulWidget {
   static const appRoute = "/stories";

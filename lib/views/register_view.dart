@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+part of 'views.dart';
 class RegisterView extends StatefulWidget {
   static const appRoute = '/register';
   const RegisterView({super.key});
@@ -11,6 +10,15 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Cerita Kita",
+          style: blackTextStyle.copyWith(fontSize: 24, fontWeight: bold),
+        ),
+      ),
+      body: SingleChildScrollView(child: Column(children: [])),
+    );
   }
 }

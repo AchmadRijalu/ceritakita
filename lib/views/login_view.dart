@@ -1,10 +1,4 @@
-import 'package:ceritakita/shared/app_image.dart';
-import 'package:ceritakita/shared/theme.dart';
-import 'package:ceritakita/views/register_view.dart';
-import 'package:ceritakita/views/widgets/forms.dart';
-import 'package:ceritakita/views/widgets/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+part of 'views.dart';
 
 class LoginView extends StatefulWidget {
   static const appRoute = '/login';
