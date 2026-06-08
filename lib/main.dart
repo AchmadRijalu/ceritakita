@@ -1,3 +1,4 @@
+import 'package:ceritakita/injection/injection.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
 import 'package:ceritakita/router/router.dart';
 import 'package:ceritakita/shared/theme.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  setupInjection();
   runApp(const MyApp());
 }
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      providers: [ChangeNotifierProvider(create: (_) => sl<AuthProvider>())],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'CeritaKita',

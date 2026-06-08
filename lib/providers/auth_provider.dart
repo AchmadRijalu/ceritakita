@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 class AuthProvider extends ChangeNotifier with BaseProvider {
   final AuthRepository _authRepository;
 
-  AuthProvider({AuthRepository? authRepository})
-      : _authRepository = authRepository ?? AuthRepository();
+  AuthProvider({required AuthRepository authRepository})
+    : _authRepository = authRepository;
 
   LoginModel? loginModel;
 
@@ -19,6 +19,18 @@ class AuthProvider extends ChangeNotifier with BaseProvider {
     switch (result) {
       case Success(:final data):
         loginModel = data;
+        setSuccess();
+      case Failure(:final message):
+        setFailure(message);
+    }
+  }
+
+  Future<void> fetchRegister(String name, String email, String password) async {
+    setLoading();
+    final result = await _authRepository.fetchRegister(name, email, password);
+
+    switch (result) {
+      case Success(:final data):
         setSuccess();
       case Failure(:final message):
         setFailure(message);
