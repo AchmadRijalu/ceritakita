@@ -44,6 +44,8 @@ dependencies:
   google_fonts: ^8.1.0
   get_it: ^9.2.1
   freezed: ^3.2.5
+  another_flushbar: ^2.2.4
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

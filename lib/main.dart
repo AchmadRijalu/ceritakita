@@ -1,8 +1,9 @@
-
+import 'package:ceritakita/providers/auth_provider.dart';
 import 'package:ceritakita/router/router.dart';
 import 'package:ceritakita/shared/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +18,13 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'CeritaKita',
-      routerConfig: appRouter,
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => AuthProvider())],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        title: 'CeritaKita',
+        routerConfig: appRouter,
+      ),
     );
   }
 }

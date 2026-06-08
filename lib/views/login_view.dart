@@ -87,12 +87,30 @@ class _LoginViewState extends State<LoginView> {
                   },
                 ),
                 const SizedBox(height: 24),
-                CustomFilledButton(
-                  title: "Login",
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // proceed with login
-                    }
+                Consumer<AuthProvider>(
+                  builder: (context, value, child) {
+                    return CustomFilledButton(
+                      title: value.isLoading ? "Loading..." : "Login",
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final auth = context.read<AuthProvider>();
+
+                          await auth.fetchLogin(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                          if (!mounted) return;
+                          if (auth.isSuccess) {
+                            context.go(StoriesView.appRoute);
+                          } else if (auth.isFailure) {
+                            showSnackBar(
+                              context,
+                              auth.errorMessage ?? 'Login failed',
+                            );
+                          }
+                        }
+                      },
+                    );
                   },
                 ),
                 const Spacer(),
@@ -100,9 +118,12 @@ class _LoginViewState extends State<LoginView> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Don't have an account? "),
-                    CustomTextButton(title: "Register", onPressed: () {
-                      context.push(RegisterView.appRoute);
-                    },),
+                    CustomTextButton(
+                      title: "Register",
+                      onPressed: () {
+                        context.push(RegisterView.appRoute);
+                      },
+                    ),
                   ],
                 ),
               ],

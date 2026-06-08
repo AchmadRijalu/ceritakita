@@ -8,6 +8,7 @@ Color lightBackgroundColor = const Color(0xffF6F8FB);
 Color darkBackgroundColor = const Color(0xff020518);
 Color primaryColor = const Color(0xff2563EB);
 Color primaryDarkColor = const Color(0xff004AC6);
+Color redColor = const Color(0XFFF52828);
 
 TextStyle blackTextStyle = GoogleFonts.poppins(
   color: blackColor,
