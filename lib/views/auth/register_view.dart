@@ -1,4 +1,4 @@
-part of 'views.dart';
+part of '../views.dart';
 
 class RegisterView extends StatefulWidget {
   static const appRoute = '/register';
@@ -132,9 +132,11 @@ class _RegisterViewState extends State<RegisterView> {
                       if (!mounted) return;
 
                       if (authContext.isSuccess) {
-                        final message = authContext.successMessage ??
+                        final message =
+                            authContext.successMessage ??
                             'Registration successful';
-                        context.pop(message);
+                        authContext.reset();
+                        context.go(LoginView.appRoute, extra: message);
                       } else if (authContext.isFailure) {
                         showSnackBar(
                           context,

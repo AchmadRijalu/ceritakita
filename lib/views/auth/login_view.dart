@@ -1,8 +1,11 @@
-part of 'views.dart';
+part of '../views.dart';
 
 class LoginView extends StatefulWidget {
   static const appRoute = '/login';
-  const LoginView({super.key});
+
+  const LoginView({super.key, this.registerSuccessMessage});
+
+  final String? registerSuccessMessage;
 
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -12,6 +15,18 @@ class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final message = widget.registerSuccessMessage;
+    if (message != null && message.isNotEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        showSnackBar(context, message, backgroundColor: greenColor);
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -100,9 +115,7 @@ class _LoginViewState extends State<LoginView> {
                             _passwordController.text,
                           );
                           if (!mounted) return;
-                          if (auth.isSuccess) {
-                            context.go(StoriesView.appRoute);
-                          } else if (auth.isFailure) {
+                          if (auth.isFailure) {
                             showSnackBar(
                               context,
                               auth.errorMessage ?? 'Login failed',
@@ -120,17 +133,7 @@ class _LoginViewState extends State<LoginView> {
                     const Text("Don't have an account? "),
                     CustomTextButton(
                       title: "Register",
-                      onPressed: () async {
-                        final result = await context.push<String>(
-                          RegisterView.appRoute,
-                        );
-                        if (!context.mounted || result == null) return;
-                        showSnackBar(
-                          context,
-                          result,
-                          backgroundColor: greenColor,
-                        );
-                      },
+                      onPressed: () => context.go(RegisterView.appRoute),
                     ),
                   ],
                 ),

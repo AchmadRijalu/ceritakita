@@ -1,18 +1,26 @@
+import 'package:ceritakita/core/app_config.dart';
+import 'package:ceritakita/Utils/network_logger.dart';
 import 'package:ceritakita/injection/injection.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
+import 'package:ceritakita/providers/stories_provider.dart';
 import 'package:ceritakita/router/router.dart';
-import 'package:ceritakita/shared/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupInjection();
-  runApp(const MyApp());
+  final authProvider = sl<AuthProvider>();
+  await authProvider.initialize();
+  initRouter(authProvider);
+  runApp(MyApp(authProvider: authProvider));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.authProvider});
+
+  final AuthProvider authProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +29,19 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => sl<AuthProvider>())],
+      providers: [
+        ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
+        ChangeNotifierProvider(create: (_) => sl<StoriesProvider>()),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'CeritaKita',
+        title: AppConfig.appName,
         routerConfig: appRouter,
+        builder: (context, child) {
+          if (child == null) return const SizedBox.shrink();
+          if (!AppConfig.enableNetworkLogger) return child;
+          return NetworkLogger.instance.overlay(child: child);
+        },
       ),
     );
   }
