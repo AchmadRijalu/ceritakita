@@ -1,6 +1,7 @@
 import 'package:ceritakita/Utils/base_state_provider.dart';
 import 'package:ceritakita/Utils/result.dart';
 import 'package:ceritakita/models/login_model.dart';
+import 'package:ceritakita/models/register_model.dart';
 import 'package:ceritakita/services/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,6 +12,7 @@ class AuthProvider extends ChangeNotifier with BaseProvider {
     : _authRepository = authRepository;
 
   LoginModel? loginModel;
+  String? successMessage;
 
   Future<void> fetchLogin(String email, String password) async {
     setLoading();
@@ -31,6 +33,7 @@ class AuthProvider extends ChangeNotifier with BaseProvider {
 
     switch (result) {
       case Success(:final data):
+        successMessage = data;
         setSuccess();
       case Failure(:final message):
         setFailure(message);

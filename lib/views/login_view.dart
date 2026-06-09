@@ -120,8 +120,16 @@ class _LoginViewState extends State<LoginView> {
                     const Text("Don't have an account? "),
                     CustomTextButton(
                       title: "Register",
-                      onPressed: () {
-                        context.push(RegisterView.appRoute);
+                      onPressed: () async {
+                        final result = await context.push<String>(
+                          RegisterView.appRoute,
+                        );
+                        if (!context.mounted || result == null) return;
+                        showSnackBar(
+                          context,
+                          result,
+                          backgroundColor: greenColor,
+                        );
                       },
                     ),
                   ],

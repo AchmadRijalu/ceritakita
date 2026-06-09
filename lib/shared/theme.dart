@@ -9,17 +9,12 @@ Color darkBackgroundColor = const Color(0xff020518);
 Color primaryColor = const Color(0xff2563EB);
 Color primaryDarkColor = const Color(0xff004AC6);
 Color redColor = const Color(0XFFF52828);
+Color greenColor = const Color(0XFF1E6F5C);
 
-TextStyle blackTextStyle = GoogleFonts.poppins(
-  color: blackColor,
-);
+TextStyle blackTextStyle = GoogleFonts.poppins(color: blackColor);
 
-TextStyle whiteTextStyle = GoogleFonts.poppins(
-  color: whiteColor,
-);
-TextStyle greyTextStyle = GoogleFonts.poppins(
-  color: greyColor,
-);
+TextStyle whiteTextStyle = GoogleFonts.poppins(color: whiteColor);
+TextStyle greyTextStyle = GoogleFonts.poppins(color: greyColor);
 
 TextStyle primaryDarkTextStyle = GoogleFonts.poppins(color: primaryDarkColor);
 

@@ -112,8 +112,10 @@ class _CustomFilledButtonState extends State<CustomFilledButton>
                         : Text(
                             widget.title,
                             key: ValueKey(widget.title),
-                            style: Theme.of(context).textTheme.labelLarge
-                                ?.copyWith(color: Colors.white, fontSize: 16),
+                            style: whiteTextStyle.copyWith(
+                              fontWeight: bold,
+                              fontSize: 16,
+                            ),
                           ),
                   ),
                 ),
