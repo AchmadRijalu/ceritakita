@@ -48,7 +48,7 @@ class _StoriesViewState extends State<StoriesView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                 "Hi, Welcome!",
+                  "Hi, Welcome!",
                   style: blackTextStyle.copyWith(
                     fontSize: 24,
                     fontWeight: semiBold,
@@ -67,6 +67,7 @@ class _StoriesViewState extends State<StoriesView> {
           Expanded(
             child: Consumer<StoriesProvider>(
               builder: (context, storiesProvider, _) {
+                final stories = storiesProvider.storiesModel?.listStory ?? [];
                 if (storiesProvider.isLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -95,9 +96,6 @@ class _StoriesViewState extends State<StoriesView> {
                     ),
                   );
                 }
-
-                final stories = storiesProvider.storiesModel?.listStory ?? [];
-
                 if (stories.isEmpty) {
                   return Center(
                     child: Text(

@@ -1,4 +1,3 @@
-import 'package:ceritakita/core/app_config.dart';
 import 'package:ceritakita/Utils/network_logger.dart';
 import 'package:ceritakita/injection/injection.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
@@ -35,11 +34,11 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: AppConfig.appName,
+        title: "Cerita Kita",
         routerConfig: appRouter,
         builder: (context, child) {
           if (child == null) return const SizedBox.shrink();
-          if (!AppConfig.enableNetworkLogger) return child;
+
           return NetworkLogger.instance.overlay(child: child);
         },
       ),
