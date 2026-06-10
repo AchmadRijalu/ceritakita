@@ -59,7 +59,7 @@ class StoriesRepository {
   Future<Result<DetailStoryModel>> fetchDetailStory(String id) async {
     try {
       final response = await _client.get(
-        Uri.parse("${baseUrl}//stories/:$id"),
+        Uri.parse('$baseUrl/stories/$id'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': await _authRepository.getToken(),

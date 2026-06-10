@@ -113,7 +113,7 @@ class _StoriesViewState extends State<StoriesView> {
                     itemBuilder: (context, index) {
                       final story = stories[index];
                       return GestureDetector(
-                        onTap: () => context.push(DetailStoriesView.appRoute),
+                        onTap: () => context.push('/detailStory/${story.id}'),
                         child: StoryListItem(storyItemResult: story),
                       );
                     },

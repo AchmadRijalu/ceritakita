@@ -45,7 +45,9 @@ GoRouter createAppRouter(AuthProvider authProvider) {
       GoRoute(
         path: DetailStoriesView.appRoute,
         builder: (context, state) {
-          return const DetailStoriesView();
+          return DetailStoriesView(
+            storyId: state.pathParameters['id']!,
+          );
         },
       ),
       GoRoute(
