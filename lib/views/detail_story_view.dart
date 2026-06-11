@@ -15,6 +15,7 @@ class _DetailStoriesViewState extends State<DetailStoriesView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<StoriesProvider>().fetchDetailStory(widget.storyId);
     });
   }
@@ -23,46 +24,32 @@ class _DetailStoriesViewState extends State<DetailStoriesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primaryColor,
+        foregroundColor: whiteColor,
         title: Text(
           'Story Detail',
-          style: blackTextStyle.copyWith(fontSize: 18, fontWeight: bold),
+          style: whiteTextStyle.copyWith(fontSize: 18, fontWeight: bold),
         ),
       ),
       body: Consumer<StoriesProvider>(
         builder: (context, storiesProvider, _) {
-          final story = storiesProvider.detailStoryModel?.detailStoryResult;
-          if (story == null) {
-            return const SizedBox.shrink();
-          }
           if (storiesProvider.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
           if (storiesProvider.isFailure) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      storiesProvider.errorMessage ?? 'Failed to load story',
-                      textAlign: TextAlign.center,
-                      style: greyTextStyle,
-                    ),
-                    const SizedBox(height: 16),
-                    CustomFilledButton(
-                      title: 'Retry',
-                      width: 160,
-                      onPressed: () =>
-                          storiesProvider.fetchDetailStory(widget.storyId),
-                    ),
-                  ],
-                ),
-              ),
+            return ErrorItem(
+              title: 'Failed to load story',
+              message: ErrorItem.friendlyMessage(storiesProvider.errorMessage),
+              onRetry: () => storiesProvider.fetchDetailStory(widget.storyId),
             );
           }
-          
+
+          final story = storiesProvider.detailStoryModel?.detailStoryResult;
+          if (story == null) {
+            return const SizedBox.shrink();
+          }
+
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,6 +13,7 @@ class _StoriesViewState extends State<StoriesView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
       context.read<StoriesProvider>().fetchStoriesList();
     });
   }
@@ -21,23 +22,32 @@ class _StoriesViewState extends State<StoriesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primaryColor,
         centerTitle: true,
         title: Text(
           "Stories",
-          style: blackTextStyle.copyWith(fontSize: 22, fontWeight: bold),
+          style: whiteTextStyle.copyWith(fontSize: 22, fontWeight: bold),
         ),
         shadowColor: greyColor,
         actions: [
           IconButton(
             tooltip: 'Logout',
             onPressed: () => context.read<AuthProvider>().logout(),
-            icon: const Icon(Icons.logout),
+            icon: Icon(Icons.logout, color: whiteColor),
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(AddStoryView.appRoute),
-        child: const Icon(Icons.add),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: primaryColor,
+        foregroundColor: whiteColor,
+        onPressed: () async {
+          final message = await context.push<String>(AddStoryView.appRoute);
+          if (!mounted) return;
+          if (message != null && message.isNotEmpty) {
+            showSnackBar(context, message, backgroundColor: greenColor);
+          }
+        },
+        label: Row(children: [Icon(Icons.add), Text("Tambah Story")]),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,27 +83,12 @@ class _StoriesViewState extends State<StoriesView> {
                 }
 
                 if (storiesProvider.isFailure) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            storiesProvider.errorMessage ??
-                                'Failed to load List :(',
-                            textAlign: TextAlign.center,
-                            style: greyTextStyle,
-                          ),
-                          const SizedBox(height: 16),
-                          CustomFilledButton(
-                            title: 'Retry',
-                            width: 160,
-                            onPressed: () => storiesProvider.fetchStoriesList(),
-                          ),
-                        ],
-                      ),
+                  return ErrorItem(
+                    title: 'Failed to load stories',
+                    message: ErrorItem.friendlyMessage(
+                      storiesProvider.errorMessage,
                     ),
+                    onRetry: () => storiesProvider.fetchStoriesList(),
                   );
                 }
                 if (stories.isEmpty) {
@@ -106,6 +101,8 @@ class _StoriesViewState extends State<StoriesView> {
                 }
 
                 return RefreshIndicator(
+                  backgroundColor: primaryColor,
+                  color: whiteColor,
                   onRefresh: () => storiesProvider.fetchStoriesList(),
                   child: ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),

@@ -1,13 +1,18 @@
+import 'dart:io';
+
+import 'package:ceritakita/models/form/add_new_story_form_model.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
 import 'package:ceritakita/providers/stories_provider.dart';
 import 'package:ceritakita/shared/app_image.dart';
 import 'package:ceritakita/shared/shared_method.dart';
 import 'package:ceritakita/shared/theme.dart';
+import 'package:ceritakita/views/widgets/error_item.dart';
 import 'package:ceritakita/views/widgets/forms.dart';
 import 'package:ceritakita/views/widgets/story_list_item.dart';
 import 'package:ceritakita/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 part 'auth/login_view.dart';

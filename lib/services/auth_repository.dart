@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:ceritakita/Utils/result.dart';
-import 'package:ceritakita/models/login_form_model.dart';
+import 'package:ceritakita/models/form/login_form_model.dart';
 import 'package:ceritakita/models/login_model.dart';
 import 'package:ceritakita/models/register_model.dart';
 import 'package:ceritakita/shared/shared_values.dart';

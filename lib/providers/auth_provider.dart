@@ -1,6 +1,6 @@
 import 'package:ceritakita/Utils/base_state_provider.dart';
 import 'package:ceritakita/Utils/result.dart';
-import 'package:ceritakita/models/login_form_model.dart';
+import 'package:ceritakita/models/form/login_form_model.dart';
 import 'package:ceritakita/models/login_model.dart';
 import 'package:ceritakita/services/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
