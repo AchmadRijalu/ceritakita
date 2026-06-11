@@ -22,12 +22,14 @@ class _DetailStoriesViewState extends State<DetailStoriesView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
         foregroundColor: whiteColor,
         title: Text(
-          'Story Detail',
+          l10n.storyDetail,
           style: whiteTextStyle.copyWith(fontSize: 18, fontWeight: bold),
         ),
       ),
@@ -39,8 +41,11 @@ class _DetailStoriesViewState extends State<DetailStoriesView> {
 
           if (storiesProvider.isFailure) {
             return ErrorItem(
-              title: 'Failed to load story',
-              message: ErrorItem.friendlyMessage(storiesProvider.errorMessage),
+              title: l10n.failedToLoadStory,
+              message: ErrorItem.friendlyMessage(
+                context,
+                storiesProvider.errorMessage,
+              ),
               onRetry: () => storiesProvider.fetchDetailStory(widget.storyId),
             );
           }

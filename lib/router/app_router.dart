@@ -26,9 +26,8 @@ GoRouter createAppRouter(AuthProvider authProvider) {
     routes: [
       GoRoute(
         path: LoginView.appRoute,
-        builder: (context, state) => LoginView(
-          registerSuccessMessage: state.extra as String?,
-        ),
+        builder: (context, state) =>
+            LoginView(registerSuccessMessage: state.extra as String?),
       ),
       GoRoute(
         path: RegisterView.appRoute,
@@ -45,9 +44,7 @@ GoRouter createAppRouter(AuthProvider authProvider) {
       GoRoute(
         path: DetailStoriesView.appRoute,
         builder: (context, state) {
-          return DetailStoriesView(
-            storyId: state.pathParameters['id']!,
-          );
+          return DetailStoriesView(storyId: state.pathParameters['id']!);
         },
       ),
       GoRoute(

@@ -14,19 +14,13 @@ void setupInjection() {
   sl.registerLazySingleton<http.Client>(
     () => NetworkLogger.instance.createClient(),
   );
-  sl.registerLazySingleton(
-    () => AuthRepository(client: sl<http.Client>()),
-  );
+  sl.registerLazySingleton(() => AuthRepository(client: sl<http.Client>()));
   sl.registerLazySingleton(
     () => StoriesRepository(
       client: sl<http.Client>(),
       authRepository: sl<AuthRepository>(),
     ),
   );
-  sl.registerLazySingleton(
-    () => AuthProvider(authRepository: sl()),
-  );
-  sl.registerLazySingleton(
-    () => StoriesProvider(storiesRepository: sl()),
-  );
+  sl.registerLazySingleton(() => AuthProvider(authRepository: sl()));
+  sl.registerLazySingleton(() => StoriesProvider(storiesRepository: sl()));
 }

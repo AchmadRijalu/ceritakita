@@ -1,3 +1,4 @@
+import 'package:ceritakita/l10n/app_localizations.dart';
 import 'package:ceritakita/shared/theme.dart';
 import 'package:ceritakita/views/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -7,16 +8,13 @@ class ErrorItem extends StatelessWidget {
   final String? title;
   final String? message;
 
-  const ErrorItem({
-    super.key,
-    this.onRetry,
-    this.title,
-    this.message,
-  });
+  const ErrorItem({super.key, this.onRetry, this.title, this.message});
 
-  static String friendlyMessage(String? error) {
+  static String friendlyMessage(BuildContext context, String? error) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (error == null || error.isEmpty) {
-      return 'Something went wrong. Please try again.';
+      return l10n.somethingWentWrong;
     }
 
     final lowered = error.toLowerCase();
@@ -27,14 +25,16 @@ class ErrorItem extends StatelessWidget {
         lowered.contains('connection refused') ||
         lowered.contains('connection timed out') ||
         lowered.contains('no address associated with hostname')) {
-      return 'No internet connection. Please check your network and try again.';
+      return l10n.noInternetConnection;
     }
 
-    return 'Something went wrong. Please try again.';
+    return l10n.somethingWentWrong;
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
@@ -48,15 +48,11 @@ class ErrorItem extends StatelessWidget {
                 color: redColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.wifi_off_rounded,
-                color: redColor,
-                size: 36,
-              ),
+              child: Icon(Icons.wifi_off_rounded, color: redColor, size: 36),
             ),
             const SizedBox(height: 20),
             Text(
-              title ?? 'Oops!',
+              title ?? l10n.oops,
               style: blackTextStyle.copyWith(
                 fontSize: 20,
                 fontWeight: semiBold,
@@ -65,14 +61,14 @@ class ErrorItem extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              message ?? 'Something went wrong. Please try again.',
+              message ?? l10n.somethingWentWrong,
               style: greyTextStyle.copyWith(fontSize: 14),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[
               const SizedBox(height: 24),
               CustomFilledButton(
-                title: 'Retry',
+                title: l10n.retry,
                 width: 160,
                 onPressed: onRetry,
               ),

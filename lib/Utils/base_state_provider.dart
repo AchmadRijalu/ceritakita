@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 enum BaseState { initial, loading, success, failure }

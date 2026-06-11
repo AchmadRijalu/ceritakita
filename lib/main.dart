@@ -1,6 +1,8 @@
 import 'package:ceritakita/Utils/network_logger.dart';
 import 'package:ceritakita/injection/injection.dart';
+import 'package:ceritakita/l10n/app_localizations.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
+import 'package:ceritakita/providers/locale_provider.dart';
 import 'package:ceritakita/providers/stories_provider.dart';
 import 'package:ceritakita/router/router.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +33,23 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
         ChangeNotifierProvider(create: (_) => sl<StoriesProvider>()),
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: "Cerita Kita",
-        routerConfig: appRouter,
-        builder: (context, child) {
-          if (child == null) return const SizedBox.shrink();
+      child: Consumer<LocaleProvider>(
+        builder: (context, localeProvider, _) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Cerita Kita',
+            locale: localeProvider.locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            routerConfig: appRouter,
+            builder: (context, child) {
+              if (child == null) return const SizedBox.shrink();
 
-          return NetworkLogger.instance.overlay(child: child);
+              return NetworkLogger.instance.overlay(child: child);
+            },
+          );
         },
       ),
     );

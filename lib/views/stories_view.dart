@@ -20,18 +20,37 @@ class _StoriesViewState extends State<StoriesView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
         centerTitle: true,
         title: Text(
-          "Stories",
+          l10n.stories,
           style: whiteTextStyle.copyWith(fontSize: 22, fontWeight: bold),
         ),
         shadowColor: greyColor,
         actions: [
+          PopupMenuButton<Locale>(
+            tooltip: l10n.changeLanguage,
+            icon: Icon(Icons.language, color: whiteColor),
+            onSelected: (locale) {
+              context.read<LocaleProvider>().setLocale(locale);
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: const Locale('en'),
+                child: Text(l10n.english),
+              ),
+              PopupMenuItem(
+                value: const Locale('id'),
+                child: Text(l10n.indonesian),
+              ),
+            ],
+          ),
           IconButton(
-            tooltip: 'Logout',
+            tooltip: l10n.logout,
             onPressed: () => context.read<AuthProvider>().logout(),
             icon: Icon(Icons.logout, color: whiteColor),
           ),
@@ -47,7 +66,7 @@ class _StoriesViewState extends State<StoriesView> {
             showSnackBar(context, message, backgroundColor: greenColor);
           }
         },
-        label: Row(children: [Icon(Icons.add), Text("Tambah Story")]),
+        label: Row(children: [Icon(Icons.add), Text(l10n.addStory)]),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +77,7 @@ class _StoriesViewState extends State<StoriesView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hi, Welcome!",
+                  l10n.hiWelcome,
                   style: blackTextStyle.copyWith(
                     fontSize: 24,
                     fontWeight: semiBold,
@@ -84,8 +103,9 @@ class _StoriesViewState extends State<StoriesView> {
 
                 if (storiesProvider.isFailure) {
                   return ErrorItem(
-                    title: 'Failed to load stories',
+                    title: l10n.failedToLoadStories,
                     message: ErrorItem.friendlyMessage(
+                      context,
                       storiesProvider.errorMessage,
                     ),
                     onRetry: () => storiesProvider.fetchStoriesList(),
@@ -94,7 +114,7 @@ class _StoriesViewState extends State<StoriesView> {
                 if (stories.isEmpty) {
                   return Center(
                     child: Text(
-                      'No stories yet',
+                      l10n.noStoriesYet,
                       style: greyTextStyle.copyWith(fontSize: 16),
                     ),
                   );

@@ -13,8 +13,6 @@ class _AddStoryViewState extends State<AddStoryView> {
   final TextEditingController _headlineController = TextEditingController();
   final TextEditingController _storyController = TextEditingController();
 
-  bool _showLocationFields = false;
-
   @override
   void dispose() {
     _headlineController.dispose();
@@ -24,13 +22,15 @@ class _AddStoryViewState extends State<AddStoryView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: whiteColor,
         backgroundColor: primaryColor,
         centerTitle: true,
         title: Text(
-          'Tambah Cerita Kita',
+          l10n.addStoryTitle,
           style: whiteTextStyle.copyWith(fontSize: 16, fontWeight: bold),
         ),
         shadowColor: greyColor,
@@ -80,7 +80,7 @@ class _AddStoryViewState extends State<AddStoryView> {
                                       ),
                                       const SizedBox(height: 12),
                                       Text(
-                                        'Snap or select',
+                                        l10n.snapOrSelect,
                                         style: blackTextStyle.copyWith(
                                           fontWeight: semiBold,
                                           fontSize: 16,
@@ -88,7 +88,7 @@ class _AddStoryViewState extends State<AddStoryView> {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        'Add a high-quality visual to your story',
+                                        l10n.addVisualHint,
                                         style: greyTextStyle.copyWith(
                                           fontSize: 12,
                                         ),
@@ -157,7 +157,7 @@ class _AddStoryViewState extends State<AddStoryView> {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        'Open Camera',
+                                        l10n.openCamera,
                                         style: primaryDarkTextStyle.copyWith(
                                           fontSize: 13,
                                           fontWeight: semiBold,
@@ -193,7 +193,7 @@ class _AddStoryViewState extends State<AddStoryView> {
                                       ),
                                       const SizedBox(width: 8),
                                       Text(
-                                        'From Gallery',
+                                        l10n.fromGallery,
                                         style: primaryDarkTextStyle.copyWith(
                                           fontSize: 13,
                                           fontWeight: semiBold,
@@ -213,12 +213,12 @@ class _AddStoryViewState extends State<AddStoryView> {
               ),
               const SizedBox(height: 24),
               CustomFormField(
-                title: 'Headline',
-                hintText: 'Give your story a catchy title...',
+                title: l10n.headline,
+                hintText: l10n.headlineHint,
                 controller: _headlineController,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Headline is required';
+                    return l10n.headlineRequired;
                   }
                   return null;
                 },
@@ -228,7 +228,7 @@ class _AddStoryViewState extends State<AddStoryView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'The Story',
+                    l10n.theStory,
                     style: blackTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: regular,
@@ -248,12 +248,12 @@ class _AddStoryViewState extends State<AddStoryView> {
                 onChanged: (_) => setState(() {}),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Story is required';
+                    return l10n.storyRequired;
                   }
                   return null;
                 },
                 decoration: InputDecoration(
-                  hintText: 'Once upon a time...',
+                  hintText: l10n.storyHint,
                   counterText: '',
                   contentPadding: const EdgeInsets.all(16),
                   border: OutlineInputBorder(
@@ -265,17 +265,16 @@ class _AddStoryViewState extends State<AddStoryView> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 32),
               Consumer<StoriesProvider>(
                 builder: (context, storiesProvider, _) {
                   return CustomFilledButton(
                     title: storiesProvider.isLoading
-                        ? 'Loading...'
-                        : 'Upload Story',
+                        ? l10n.loading
+                        : l10n.uploadStory,
                     onPressed: () async {
                       if (storiesProvider.selectedPhoto == null) {
-                        showSnackBar(context, 'Please select a photo first');
+                        showSnackBar(context, l10n.pleaseSelectPhoto);
                         return;
                       }
 
@@ -289,11 +288,12 @@ class _AddStoryViewState extends State<AddStoryView> {
                       if (!mounted) return;
 
                       if (storiesProvider.isSuccess) {
-                        context.pop('Story uploaded successfully');
+                        context.pop(l10n.storyUploadedSuccessfully);
                       } else if (storiesProvider.isFailure) {
                         showSnackBar(
                           context,
                           ErrorItem.friendlyMessage(
+                            context,
                             storiesProvider.errorMessage,
                           ),
                         );

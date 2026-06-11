@@ -37,6 +37,8 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -50,7 +52,7 @@ class _LoginViewState extends State<LoginView> {
                 AppImage.logo.image(width: 122),
                 const SizedBox(height: 24),
                 Text(
-                  "Hello There!",
+                  l10n.helloThere,
                   style: blackTextStyle.copyWith(
                     color: blackColor,
                     fontWeight: bold,
@@ -59,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "Sign in to Continue",
+                  l10n.signInToContinue,
                   style: blackTextStyle.copyWith(
                     color: blackColor,
                     fontWeight: regular,
@@ -68,35 +70,35 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 const SizedBox(height: 16),
                 CustomFormField(
-                  title: "Email Address",
+                  title: l10n.emailAddress,
                   hintText: "john.dave@gmail.com",
                   keyBoardType: TextInputType.emailAddress,
                   controller: _emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Email is required';
+                      return l10n.emailRequired;
                     }
                     if (!RegExp(
                       r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$',
                     ).hasMatch(value)) {
-                      return 'Enter a valid email';
+                      return l10n.emailInvalid;
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 16),
                 CustomFormField(
-                  title: "Password",
+                  title: l10n.password,
                   hintText: "",
                   isPasswordField: true,
                   keyBoardType: TextInputType.visiblePassword,
                   controller: _passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Password is required';
+                      return l10n.passwordRequired;
                     }
                     if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
+                      return l10n.passwordMin6;
                     }
                     return null;
                   },
@@ -105,7 +107,7 @@ class _LoginViewState extends State<LoginView> {
                 Consumer<AuthProvider>(
                   builder: (context, value, child) {
                     return CustomFilledButton(
-                      title: value.isLoading ? "Loading..." : "Login",
+                      title: value.isLoading ? l10n.loading : l10n.login,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           final auth = context.read<AuthProvider>();
@@ -118,7 +120,7 @@ class _LoginViewState extends State<LoginView> {
                           if (auth.isFailure) {
                             showSnackBar(
                               context,
-                              auth.errorMessage ?? 'Login failed',
+                              auth.errorMessage ?? l10n.loginFailed,
                             );
                           }
                         }
@@ -130,10 +132,10 @@ class _LoginViewState extends State<LoginView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("Don't have an account? "),
+                    Text(l10n.dontHaveAccount),
                     CustomTextButton(
-                      title: "Register",
-                      onPressed: () => context.go(RegisterView.appRoute),
+                      title: l10n.register,
+                      onPressed: () => context.push(RegisterView.appRoute),
                     ),
                   ],
                 ),
