@@ -29,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.ceritakita"
-        minSdk = flutter.minSdkVersion
+        minSdk = maxOf(flutter.minSdkVersion, 21)
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

@@ -1,1 +1,1 @@
-String baseUrl = "https://story-api.dicoding.dev/v1";
+String baseUrl = 'https://story-api.dicoding.dev/v1';

@@ -14,29 +14,80 @@ class StoriesProvider extends ChangeNotifier with BaseProvider {
   final StoriesRepository _storiesRepository;
   final ImagePicker _imagePicker = ImagePicker();
 
+  static const int pageSize = 5;
+
   StoriesModel? storiesModel;
   DetailStoryModel? detailStoryModel;
   XFile? selectedPhoto;
 
-  Future<void> fetchStoriesList({
-    int? page,
-    int? size,
-    int location = 0,
-  }) async {
+  final List<StoryResult> _stories = [];
+  int _currentPage = 1;
+  bool _hasMore = true;
+  bool isLoadingMore = false;
+  bool isInitialLoading = false;
+
+  List<StoryResult> get stories => List.unmodifiable(_stories);
+  bool get hasMore => _hasMore;
+
+  Future<void> fetchStoriesList() async {
+    _currentPage = 1;
+    _hasMore = true;
+    _stories.clear();
+    isInitialLoading = true;
     setLoading();
 
+    await _loadPage(_currentPage, append: false);
+
+    isInitialLoading = false;
+  }
+
+  Future<void> fetchMoreStories() async {
+    if (!_hasMore || isLoadingMore || isInitialLoading) return;
+
+    isLoadingMore = true;
+    notifyListeners();
+
+    await _loadPage(_currentPage + 1, append: true);
+
+    isLoadingMore = false;
+    notifyListeners();
+  }
+
+  Future<void> _loadPage(int page, {required bool append}) async {
     final result = await _storiesRepository.fetchStoriesList(
       page: page,
-      size: size,
-      location: location,
+      size: pageSize,
+      location: 0,
     );
 
     switch (result) {
       case Success(:final data):
         storiesModel = data;
-        setSuccess();
+
+        if (append) {
+          final existingIds = _stories.map((story) => story.id).toSet();
+          final newStories = data.listStory
+              .where((story) => !existingIds.contains(story.id))
+              .toList();
+
+          if (newStories.isEmpty) {
+            _hasMore = false;
+          } else {
+            _currentPage = page;
+            _stories.addAll(newStories);
+            _hasMore = data.listStory.length >= pageSize;
+          }
+        } else {
+          _stories.addAll(data.listStory);
+          _hasMore = data.listStory.length >= pageSize;
+          setSuccess();
+        }
       case Failure(:final message):
-        setFailure(message);
+        if (append) {
+          _hasMore = false;
+        } else {
+          setFailure(message);
+        }
     }
   }
 
@@ -68,12 +119,7 @@ class StoriesProvider extends ChangeNotifier with BaseProvider {
     }
   }
 
-  Future<void> addNewStory(
-    String headline,
-    String description, {
-    double? lat,
-    double? lon,
-  }) async {
+  Future<void> addNewStory(String headline, String description) async {
     setLoading();
 
     final result = await _storiesRepository.addNewStory(
@@ -81,8 +127,6 @@ class StoriesProvider extends ChangeNotifier with BaseProvider {
         headline: headline,
         description: description,
         photo: selectedPhoto,
-        lat: lat,
-        lon: lon,
       ),
     );
 

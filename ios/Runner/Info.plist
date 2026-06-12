@@ -57,8 +57,6 @@
 	<string>This app needs camera access to take story photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs photo library access to select story photos.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs location access to attach location to your story.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
