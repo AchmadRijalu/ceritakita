@@ -1,53 +1,32 @@
-class StoriesModel {
-  final bool error;
-  final String message;
-  final List<StoryResult> listStory;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  StoriesModel({
-    required this.error,
-    required this.message,
-    required this.listStory,
-  });
+part 'stories_model.freezed.dart';
+part 'stories_model.g.dart';
 
-  factory StoriesModel.fromJson(Map<String, dynamic> json) {
-    return StoriesModel(
-      error: json['error'],
-      message: json['message'],
-      listStory: (json['listStory'] as List)
-          .map((e) => StoryResult.fromJson(e))
-          .toList(),
-    );
-  }
+@freezed
+abstract class StoriesModel with _$StoriesModel {
+  const factory StoriesModel({
+    required bool error,
+    required String message,
+    required List<StoryResult> listStory,
+  }) = _StoriesModel;
+
+  factory StoriesModel.fromJson(Map<String, dynamic> json) =>
+      _$StoriesModelFromJson(json);
 }
 
-class StoryResult {
-  final String id;
-  final String name;
-  final String description;
-  final String photoUrl;
-  final DateTime createdAt;
-  final double? lat;
-  final double? lon;
+@freezed
+abstract class StoryResult with _$StoryResult {
+  const factory StoryResult({
+    required String id,
+    required String name,
+    required String description,
+    required String photoUrl,
+    required DateTime createdAt,
+    double? lat,
+    double? lon,
+  }) = _StoryResult;
 
-  StoryResult({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.photoUrl,
-    required this.createdAt,
-    this.lat,
-    this.lon,
-  });
-
-  factory StoryResult.fromJson(Map<String, dynamic> json) {
-    return StoryResult(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      photoUrl: json['photoUrl'],
-      createdAt: DateTime.parse(json['createdAt']),
-      lat: (json['lat'] as num?)?.toDouble(),
-      lon: (json['lon'] as num?)?.toDouble(),
-    );
-  }
+  factory StoryResult.fromJson(Map<String, dynamic> json) =>
+      _$StoryResultFromJson(json);
 }

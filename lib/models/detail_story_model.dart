@@ -1,51 +1,32 @@
-class DetailStoryModel {
-  final bool error;
-  final String message;
-  final DetailStoryResult detailStoryResult;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  DetailStoryModel({
-    required this.error,
-    required this.message,
-    required this.detailStoryResult,
-  });
+part 'detail_story_model.freezed.dart';
+part 'detail_story_model.g.dart';
 
-  factory DetailStoryModel.fromJson(Map<String, dynamic> json) {
-    return DetailStoryModel(
-      error: json['error'],
-      message: json['message'],
-      detailStoryResult: DetailStoryResult.fromJson(json['story']),
-    );
-  }
+@freezed
+abstract class DetailStoryModel with _$DetailStoryModel {
+  const factory DetailStoryModel({
+    required bool error,
+    required String message,
+    @JsonKey(name: 'story') required DetailStoryResult detailStoryResult,
+  }) = _DetailStoryModel;
+
+  factory DetailStoryModel.fromJson(Map<String, dynamic> json) =>
+      _$DetailStoryModelFromJson(json);
 }
 
-class DetailStoryResult {
-  final String id;
-  final String name;
-  final String description;
-  final String photoUrl;
-  final DateTime createdAt;
-  final double? lat;
-  final double? lon;
+@freezed
+abstract class DetailStoryResult with _$DetailStoryResult {
+  const factory DetailStoryResult({
+    required String id,
+    required String name,
+    required String description,
+    required String photoUrl,
+    required DateTime createdAt,
+    double? lat,
+    double? lon,
+  }) = _DetailStoryResult;
 
-  DetailStoryResult({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.photoUrl,
-    required this.createdAt,
-    this.lat,
-    this.lon,
-  });
-
-  factory DetailStoryResult.fromJson(Map<String, dynamic> json) {
-    return DetailStoryResult(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      photoUrl: json['photoUrl'],
-      createdAt: DateTime.parse(json['createdAt']),
-      lat: json['lat']?.toDouble(),
-      lon: json['lon']?.toDouble(),
-    );
-  }
+  factory DetailStoryResult.fromJson(Map<String, dynamic> json) =>
+      _$DetailStoryResultFromJson(json);
 }
