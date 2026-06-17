@@ -168,4 +168,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get indonesian => 'Indonesian';
+
+  @override
+  String get addLocation => 'Add location';
+
+  @override
+  String get pickLocationTitle => 'Pick Location';
+
+  @override
+  String get mapPickerHint =>
+      'Move the map to place the pointer on your story location';
+
+  @override
+  String get confirmLocation => 'Confirm Location';
+
+  @override
+  String locationSelected(String lat, String lon) {
+    return 'Location: $lat, $lon';
+  }
+
+  @override
+  String get removeLocation => 'Remove';
+
+  @override
+  String get storyLocation => 'Story Location';
+
+  @override
+  String get tapMarkerForAddress => 'Tap the marker to see the address';
+
+  @override
+  String get loadingAddress => 'Loading address...';
+
+  @override
+  String get addressUnavailable => 'Address unavailable for this location';
 }

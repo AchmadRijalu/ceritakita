@@ -3,15 +3,20 @@ import 'package:ceritakita/Utils/result.dart';
 import 'package:ceritakita/models/form/add_new_story_form_model.dart';
 import 'package:ceritakita/models/detail_story_model.dart';
 import 'package:ceritakita/models/stories_model.dart';
+import 'package:ceritakita/providers/map_provider.dart';
 import 'package:ceritakita/services/stories_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 class StoriesProvider extends ChangeNotifier with BaseProvider {
-  StoriesProvider({required StoriesRepository storiesRepository})
-    : _storiesRepository = storiesRepository;
+  StoriesProvider({
+    required StoriesRepository storiesRepository,
+    required MapProvider mapProvider,
+  }) : _storiesRepository = storiesRepository,
+       _mapProvider = mapProvider;
 
   final StoriesRepository _storiesRepository;
+  final MapProvider _mapProvider;
   final ImagePicker _imagePicker = ImagePicker();
 
   static const int pageSize = 5;
@@ -127,12 +132,15 @@ class StoriesProvider extends ChangeNotifier with BaseProvider {
         headline: headline,
         description: description,
         photo: selectedPhoto,
+        lat: _mapProvider.selectedLat,
+        lon: _mapProvider.selectedLon,
       ),
     );
 
     switch (result) {
       case Success():
         selectedPhoto = null;
+        _mapProvider.clearSelectedLocation();
         await fetchStoriesList();
       case Failure(:final message):
         setFailure(message);

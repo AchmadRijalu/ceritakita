@@ -36,7 +36,9 @@ class _DetailStoriesViewState extends State<DetailStoriesView> {
       body: Consumer<StoriesProvider>(
         builder: (context, storiesProvider, _) {
           if (storiesProvider.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CeritaLoadingAnimation(message: l10n.loading),
+            );
           }
 
           if (storiesProvider.isFailure) {
@@ -87,6 +89,14 @@ class _DetailStoriesViewState extends State<DetailStoriesView> {
                         story.description,
                         style: blackTextStyle.copyWith(fontSize: 14),
                       ),
+                      if (hasValidLocation(story.lat, story.lon)) ...[
+                        const SizedBox(height: 24),
+                        StoryLocationMap(
+                          lat: story.lat!,
+                          lon: story.lon!,
+                          title: story.name,
+                        ),
+                      ],
                     ],
                   ),
                 ),

@@ -415,6 +415,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Indonesian'**
   String get indonesian;
+
+  /// No description provided for @addLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Add location'**
+  String get addLocation;
+
+  /// No description provided for @pickLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick Location'**
+  String get pickLocationTitle;
+
+  /// No description provided for @mapPickerHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Move the map to place the pointer on your story location'**
+  String get mapPickerHint;
+
+  /// No description provided for @confirmLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Location'**
+  String get confirmLocation;
+
+  /// No description provided for @locationSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Location: {lat}, {lon}'**
+  String locationSelected(String lat, String lon);
+
+  /// No description provided for @removeLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeLocation;
+
+  /// No description provided for @storyLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Story Location'**
+  String get storyLocation;
+
+  /// No description provided for @tapMarkerForAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the marker to see the address'**
+  String get tapMarkerForAddress;
+
+  /// No description provided for @loadingAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading address...'**
+  String get loadingAddress;
+
+  /// No description provided for @addressUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Address unavailable for this location'**
+  String get addressUnavailable;
 }
 
 class _AppLocalizationsDelegate

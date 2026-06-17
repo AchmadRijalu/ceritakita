@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '13.0'
+platform :ios, '14.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -25,6 +25,16 @@ end
 
 require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
 
+def read_gms_api_key
+  config_path = File.expand_path('../config.json', __dir__)
+  return '' unless File.exist?(config_path)
+
+  require 'json'
+  JSON.parse(File.read(config_path))['API_KEY'] || ''
+rescue StandardError
+  ''
+end
+
 flutter_ios_podfile_setup
 
 target 'Runner' do
@@ -37,7 +47,32 @@ target 'Runner' do
 end
 
 post_install do |installer|
+  api_key = read_gms_api_key
+  maps_xcconfig_path = File.expand_path('Flutter/Maps.xcconfig', __dir__)
+  File.write(maps_xcconfig_path, "GMS_API_KEY=#{api_key}\n")
+
+  maps_config_path = File.expand_path('Runner/MapsConfig.swift', __dir__)
+  File.write(
+    maps_config_path,
+    <<~SWIFT
+      enum MapsConfig {
+        static let apiKey = "#{api_key}"
+      }
+    SWIFT
+  )
+
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
   end
+
+  require 'xcodeproj'
+  project_path = File.join(__dir__, 'Runner.xcodeproj')
+  project = Xcodeproj::Project.open(project_path)
+  runner_group = project.main_group.find_subpath('Runner', true)
+  unless runner_group.files.any? { |file| file.path == 'MapsConfig.swift' }
+    file_ref = runner_group.new_file('MapsConfig.swift')
+    runner_target = project.targets.find { |target| target.name == 'Runner' }
+    runner_target.add_file_references([file_ref])
+  end
+  project.save
 end

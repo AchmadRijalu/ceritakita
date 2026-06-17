@@ -212,6 +212,83 @@ class _AddStoryViewState extends State<AddStoryView> {
                 },
               ),
               const SizedBox(height: 24),
+              Consumer<MapProvider>(
+                builder: (context, mapProvider, _) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.addLocation,
+                        style: blackTextStyle.copyWith(
+                          fontSize: 14,
+                          fontWeight: regular,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Material(
+                        color: const Color(0xFFEFF6FF),
+                        borderRadius: BorderRadius.circular(16),
+                        child: InkWell(
+                          onTap: () {
+                            mapProvider.preparePicker(
+                              initialLat: mapProvider.selectedLat,
+                              initialLon: mapProvider.selectedLon,
+                            );
+                            context.push(MapPickerView.appRoute);
+                          },
+                          borderRadius: BorderRadius.circular(16),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 14,
+                            ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on_outlined,
+                                  color: primaryColor,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Text(
+                                    mapProvider.locationDisplayLabel(
+                                      addLocationLabel: l10n.addLocation,
+                                      loadingAddressLabel: l10n.loadingAddress,
+                                      addressUnavailableLabel:
+                                          l10n.addressUnavailable,
+                                    ),
+                                    style: primaryDarkTextStyle.copyWith(
+                                      fontSize: 13,
+                                      fontWeight: semiBold,
+                                    ),
+                                  ),
+                                ),
+                                if (mapProvider.hasSelectedLocation)
+                                  TextButton(
+                                    onPressed: mapProvider.clearSelectedLocation,
+                                    child: Text(
+                                      l10n.removeLocation,
+                                      style: primaryDarkTextStyle.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: semiBold,
+                                      ),
+                                    ),
+                                  )
+                                else
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: primaryColor,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
               CustomFormField(
                 title: l10n.headline,
                 hintText: l10n.headlineHint,

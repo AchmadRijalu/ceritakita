@@ -57,6 +57,10 @@
 	<string>This app needs camera access to take story photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs photo library access to select story photos.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access to pick story locations on the map.</string>
+	<key>GMSApiKey</key>
+	<string>$(GMS_API_KEY)</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

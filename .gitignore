@@ -46,6 +46,8 @@ app.*.map.json
 
 # Local secrets
 config.json
+ios/Flutter/Maps.xcconfig
+ios/Runner/MapsConfig.swift
 
 # Android release signing
 /android/key.properties

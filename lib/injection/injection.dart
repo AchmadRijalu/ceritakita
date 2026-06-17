@@ -1,7 +1,9 @@
 import 'package:ceritakita/Utils/network_logger.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
+import 'package:ceritakita/providers/map_provider.dart';
 import 'package:ceritakita/providers/stories_provider.dart';
 import 'package:ceritakita/services/auth_repository.dart';
+import 'package:ceritakita/services/location_repository.dart';
 import 'package:ceritakita/services/stories_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -22,5 +24,12 @@ void setupInjection() {
     ),
   );
   sl.registerLazySingleton(() => AuthProvider(authRepository: sl()));
-  sl.registerLazySingleton(() => StoriesProvider(storiesRepository: sl()));
+  sl.registerLazySingleton(() => LocationRepository());
+  sl.registerLazySingleton(() => MapProvider(locationRepository: sl()));
+  sl.registerLazySingleton(
+    () => StoriesProvider(
+      storiesRepository: sl(),
+      mapProvider: sl(),
+    ),
+  );
 }

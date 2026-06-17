@@ -53,6 +53,12 @@ GoRouter createAppRouter(AuthProvider authProvider) {
           return const AddStoryView();
         },
       ),
+      GoRoute(
+        path: MapPickerView.appRoute,
+        builder: (context, state) {
+          return const MapPickerView();
+        },
+      ),
     ],
   );
 }

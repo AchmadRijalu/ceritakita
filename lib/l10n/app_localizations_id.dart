@@ -168,4 +168,37 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get indonesian => 'Indonesia';
+
+  @override
+  String get addLocation => 'Tambah lokasi';
+
+  @override
+  String get pickLocationTitle => 'Pilih Lokasi';
+
+  @override
+  String get mapPickerHint =>
+      'Geser peta untuk menempatkan penunjuk pada lokasi ceritamu';
+
+  @override
+  String get confirmLocation => 'Konfirmasi Lokasi';
+
+  @override
+  String locationSelected(String lat, String lon) {
+    return 'Lokasi: $lat, $lon';
+  }
+
+  @override
+  String get removeLocation => 'Hapus';
+
+  @override
+  String get storyLocation => 'Lokasi Cerita';
+
+  @override
+  String get tapMarkerForAddress => 'Ketuk penanda untuk melihat alamat';
+
+  @override
+  String get loadingAddress => 'Memuat alamat...';
+
+  @override
+  String get addressUnavailable => 'Alamat tidak tersedia untuk lokasi ini';
 }

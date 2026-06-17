@@ -52,5 +52,25 @@
   "storyUploadedSuccessfully": "Story uploaded successfully",
   "changeLanguage": "Change language",
   "english": "English",
-  "indonesian": "Indonesian"
+  "indonesian": "Indonesian",
+  "addLocation": "Add location",
+  "pickLocationTitle": "Pick Location",
+  "mapPickerHint": "Move the map to place the pointer on your story location",
+  "confirmLocation": "Confirm Location",
+  "locationSelected": "Location: {lat}, {lon}",
+  "@locationSelected": {
+    "placeholders": {
+      "lat": {
+        "type": "String"
+      },
+      "lon": {
+        "type": "String"
+      }
+    }
+  },
+  "removeLocation": "Remove",
+  "storyLocation": "Story Location",
+  "tapMarkerForAddress": "Tap the marker to see the address",
+  "loadingAddress": "Loading address...",
+  "addressUnavailable": "Address unavailable for this location"
 }

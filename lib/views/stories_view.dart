@@ -103,24 +103,34 @@ class _StoriesViewState extends State<StoriesView> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: primaryColor,
-        foregroundColor: whiteColor,
-        onPressed: () async {
-          final message = await context.push<String>(AddStoryView.appRoute);
-          if (!mounted) return;
-          if (message != null && message.isNotEmpty) {
-            showSnackBar(context, message, backgroundColor: greenColor);
-          }
+      floatingActionButton: TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0.92, end: 1),
+        duration: const Duration(milliseconds: 900),
+        curve: Curves.elasticOut,
+        builder: (context, scale, child) {
+          return Transform.scale(scale: scale, child: child);
         },
-        label: Row(children: [Icon(Icons.add), Text(l10n.addStory)]),
+        child: FloatingActionButton.extended(
+          backgroundColor: primaryColor,
+          foregroundColor: whiteColor,
+          onPressed: () async {
+            final message = await context.push<String>(AddStoryView.appRoute);
+            if (!mounted) return;
+            if (message != null && message.isNotEmpty) {
+              showSnackBar(context, message, backgroundColor: greenColor);
+            }
+          },
+          label: Row(children: [Icon(Icons.add), Text(l10n.addStory)]),
+        ),
       ),
       body: Consumer<StoriesProvider>(
         builder: (context, storiesProvider, _) {
           final stories = storiesProvider.stories;
 
           if (storiesProvider.isInitialLoading && stories.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+              child: CeritaLoadingAnimation(message: l10n.loading),
+            );
           }
 
           if (storiesProvider.isFailure && stories.isEmpty) {
@@ -184,7 +194,9 @@ class _StoriesViewState extends State<StoriesView> {
                       if (index >= stories.length) {
                         return const Padding(
                           padding: EdgeInsets.symmetric(vertical: 24),
-                          child: Center(child: CircularProgressIndicator()),
+                          child: Center(
+                            child: CeritaLoadingAnimation.compact(),
+                          ),
                         );
                       }
 

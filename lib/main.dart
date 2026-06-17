@@ -3,6 +3,7 @@ import 'package:ceritakita/injection/injection.dart';
 import 'package:ceritakita/l10n/app_localizations.dart';
 import 'package:ceritakita/providers/auth_provider.dart';
 import 'package:ceritakita/providers/locale_provider.dart';
+import 'package:ceritakita/providers/map_provider.dart';
 import 'package:ceritakita/providers/stories_provider.dart';
 import 'package:ceritakita/router/router.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<AuthProvider>.value(value: authProvider),
         ChangeNotifierProvider(create: (_) => sl<StoriesProvider>()),
+        ChangeNotifierProvider(create: (_) => sl<MapProvider>()),
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
       ],
       child: Consumer<LocaleProvider>(

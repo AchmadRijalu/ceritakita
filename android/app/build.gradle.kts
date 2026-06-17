@@ -13,6 +13,19 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+fun readAndroidMapsApiKey(): String {
+    val configFile = rootProject.file("../config.json")
+    if (!configFile.exists()) return ""
+    return try {
+        @Suppress("UNCHECKED_CAST")
+        val json =
+            groovy.json.JsonSlurper().parseText(configFile.readText()) as Map<String, Any>
+        json["API_KEY_ANDROID"]?.toString() ?: ""
+    } catch (_: Exception) {
+        ""
+    }
+}
+
 android {
     namespace = "com.example.ceritakita"
     compileSdk = flutter.compileSdkVersion
@@ -33,6 +46,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = readAndroidMapsApiKey()
     }
 
     signingConfigs {
