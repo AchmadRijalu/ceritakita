@@ -212,82 +212,109 @@ class _AddStoryViewState extends State<AddStoryView> {
                 },
               ),
               const SizedBox(height: 24),
-              Consumer<MapProvider>(
-                builder: (context, mapProvider, _) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.addLocation,
-                        style: blackTextStyle.copyWith(
-                          fontSize: 14,
-                          fontWeight: regular,
+              if (AppFlavorConfig.canAddStoryLocation)
+                Consumer<MapProvider>(
+                  builder: (context, mapProvider, _) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          l10n.addLocation,
+                          style: blackTextStyle.copyWith(
+                            fontSize: 14,
+                            fontWeight: regular,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Material(
-                        color: const Color(0xFFEFF6FF),
-                        borderRadius: BorderRadius.circular(16),
-                        child: InkWell(
-                          onTap: () {
-                            mapProvider.preparePicker(
-                              initialLat: mapProvider.selectedLat,
-                              initialLon: mapProvider.selectedLon,
-                            );
-                            context.push(MapPickerView.appRoute);
-                          },
+                        const SizedBox(height: 12),
+                        Material(
+                          color: const Color(0xFFEFF6FF),
                           borderRadius: BorderRadius.circular(16),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 14,
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: primaryColor,
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Text(
-                                    mapProvider.locationDisplayLabel(
-                                      addLocationLabel: l10n.addLocation,
-                                      loadingAddressLabel: l10n.loadingAddress,
-                                      addressUnavailableLabel:
-                                          l10n.addressUnavailable,
-                                    ),
-                                    style: primaryDarkTextStyle.copyWith(
-                                      fontSize: 13,
-                                      fontWeight: semiBold,
-                                    ),
+                          child: InkWell(
+                            onTap: () {
+                              mapProvider.preparePicker(
+                                initialLat: mapProvider.selectedLat,
+                                initialLon: mapProvider.selectedLon,
+                              );
+                              context.push(MapPickerView.appRoute);
+                            },
+                            borderRadius: BorderRadius.circular(16),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 14,
+                              ),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    color: primaryColor,
                                   ),
-                                ),
-                                if (mapProvider.hasSelectedLocation)
-                                  TextButton(
-                                    onPressed: mapProvider.clearSelectedLocation,
+                                  const SizedBox(width: 12),
+                                  Expanded(
                                     child: Text(
-                                      l10n.removeLocation,
+                                      mapProvider.locationDisplayLabel(
+                                        addLocationLabel: l10n.addLocation,
+                                        loadingAddressLabel: l10n.loadingAddress,
+                                        addressUnavailableLabel:
+                                            l10n.addressUnavailable,
+                                      ),
                                       style: primaryDarkTextStyle.copyWith(
-                                        fontSize: 12,
+                                        fontSize: 13,
                                         fontWeight: semiBold,
                                       ),
                                     ),
-                                  )
-                                else
-                                  Icon(
-                                    Icons.chevron_right,
-                                    color: primaryColor,
                                   ),
-                              ],
+                                  if (mapProvider.hasSelectedLocation)
+                                    TextButton(
+                                      onPressed:
+                                          mapProvider.clearSelectedLocation,
+                                      child: Text(
+                                        l10n.removeLocation,
+                                        style: primaryDarkTextStyle.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: semiBold,
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    Icon(
+                                      Icons.chevron_right,
+                                      color: primaryColor,
+                                    ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      ],
+                    );
+                  },
+                )
+              else
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3F4F6),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: greyColor.withValues(alpha: 0.35)),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.lock_outline, color: greyColor, size: 20),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          l10n.locationPaidOnly,
+                          style: greyTextStyle.copyWith(fontSize: 13),
+                        ),
                       ),
                     ],
-                  );
-                },
-              ),
+                  ),
+                ),
               const SizedBox(height: 24),
               CustomFormField(
                 title: l10n.headline,

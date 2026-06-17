@@ -17,6 +17,10 @@ class _MapPickerViewState extends State<MapPickerView> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
+      if (!AppFlavorConfig.canAddStoryLocation) {
+        context.pop();
+        return;
+      }
       context.read<MapProvider>().initPicker();
     });
   }

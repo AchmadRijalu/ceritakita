@@ -5,6 +5,7 @@ import 'package:ceritakita/models/detail_story_model.dart';
 import 'package:ceritakita/models/stories_model.dart';
 import 'package:ceritakita/providers/map_provider.dart';
 import 'package:ceritakita/services/stories_repository.dart';
+import 'package:ceritakita/shared/app_flavor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -132,8 +133,8 @@ class StoriesProvider extends ChangeNotifier with BaseProvider {
         headline: headline,
         description: description,
         photo: selectedPhoto,
-        lat: _mapProvider.selectedLat,
-        lon: _mapProvider.selectedLon,
+        lat: AppFlavorConfig.canAddStoryLocation ? _mapProvider.selectedLat : null,
+        lon: AppFlavorConfig.canAddStoryLocation ? _mapProvider.selectedLon : null,
       ),
     );
 

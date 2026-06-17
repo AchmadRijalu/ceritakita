@@ -6,6 +6,7 @@ import 'package:ceritakita/providers/locale_provider.dart';
 import 'package:ceritakita/providers/map_provider.dart';
 import 'package:ceritakita/providers/stories_provider.dart';
 import 'package:ceritakita/shared/app_image.dart';
+import 'package:ceritakita/shared/app_flavor.dart';
 import 'package:ceritakita/shared/location_helper.dart';
 import 'package:ceritakita/shared/shared_method.dart';
 import 'package:ceritakita/shared/theme.dart';

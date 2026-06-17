@@ -13,6 +13,11 @@ GoRouter createAppRouter(AuthProvider authProvider) {
       final isAuthRoute =
           location == LoginView.appRoute || location == RegisterView.appRoute;
 
+      if (!AppFlavorConfig.canAddStoryLocation &&
+          location == MapPickerView.appRoute) {
+        return StoriesView.appRoute;
+      }
+
       if (!isLoggedIn && !isAuthRoute) {
         return LoginView.appRoute;
       }

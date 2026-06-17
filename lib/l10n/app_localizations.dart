@@ -475,6 +475,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Address unavailable for this location'**
   String get addressUnavailable;
+
+  /// No description provided for @locationPaidOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Add location is available in the Paid version'**
+  String get locationPaidOnly;
+
+  /// No description provided for @buildVariantFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get buildVariantFree;
+
+  /// No description provided for @buildVariantPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get buildVariantPaid;
 }
 
 class _AppLocalizationsDelegate

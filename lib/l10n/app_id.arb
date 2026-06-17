@@ -72,5 +72,8 @@
   "storyLocation": "Lokasi Cerita",
   "tapMarkerForAddress": "Ketuk penanda untuk melihat alamat",
   "loadingAddress": "Memuat alamat...",
-  "addressUnavailable": "Alamat tidak tersedia untuk lokasi ini"
+  "addressUnavailable": "Alamat tidak tersedia untuk lokasi ini",
+  "locationPaidOnly": "Tambah lokasi tersedia di versi Paid",
+  "buildVariantFree": "Gratis",
+  "buildVariantPaid": "Berbayar"
 }

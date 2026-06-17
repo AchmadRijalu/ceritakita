@@ -1,0 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release-paid.xcconfig"
+#include? "Maps.xcconfig"
+#include "Generated.xcconfig"
+FLUTTER_TARGET=lib/main_paid.dart
+PRODUCT_BUNDLE_IDENTIFIER=com.example.ceritakita.paid
+INFOPLIST_KEY_CFBundleDisplayName=CeritaKita Paid

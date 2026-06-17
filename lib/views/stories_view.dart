@@ -73,9 +73,29 @@ class _StoriesViewState extends State<StoriesView> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         centerTitle: true,
-        title: Text(
-          l10n.stories,
-          style: whiteTextStyle.copyWith(fontSize: 22, fontWeight: bold),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              l10n.stories,
+              style: whiteTextStyle.copyWith(fontSize: 22, fontWeight: bold),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: whiteColor.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                AppFlavorConfig.isPaid ? l10n.buildVariantPaid : l10n.buildVariantFree,
+                style: whiteTextStyle.copyWith(
+                  fontSize: 11,
+                  fontWeight: semiBold,
+                ),
+              ),
+            ),
+          ],
         ),
         shadowColor: greyColor,
         actions: [

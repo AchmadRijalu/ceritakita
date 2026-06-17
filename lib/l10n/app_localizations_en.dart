@@ -201,4 +201,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addressUnavailable => 'Address unavailable for this location';
+
+  @override
+  String get locationPaidOnly =>
+      'Add location is available in the Paid version';
+
+  @override
+  String get buildVariantFree => 'Free';
+
+  @override
+  String get buildVariantPaid => 'Paid';
 }

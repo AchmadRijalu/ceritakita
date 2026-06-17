@@ -72,5 +72,8 @@
   "storyLocation": "Story Location",
   "tapMarkerForAddress": "Tap the marker to see the address",
   "loadingAddress": "Loading address...",
-  "addressUnavailable": "Address unavailable for this location"
+  "addressUnavailable": "Address unavailable for this location",
+  "locationPaidOnly": "Add location is available in the Paid version",
+  "buildVariantFree": "Free",
+  "buildVariantPaid": "Paid"
 }

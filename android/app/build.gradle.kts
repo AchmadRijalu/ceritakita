@@ -60,6 +60,20 @@ android {
         }
     }
 
+    flavorDimensions += "tier"
+    productFlavors {
+        create("free") {
+            dimension = "tier"
+            applicationIdSuffix = ".free"
+            resValue("string", "app_name", "CeritaKita Free")
+        }
+        create("paid") {
+            dimension = "tier"
+            applicationIdSuffix = ".paid"
+            resValue("string", "app_name", "CeritaKita Paid")
+        }
+    }
+
     buildTypes {
         release {
             signingConfig = if (keystorePropertiesFile.exists()) {

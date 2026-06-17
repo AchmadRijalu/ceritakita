@@ -201,4 +201,13 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get addressUnavailable => 'Alamat tidak tersedia untuk lokasi ini';
+
+  @override
+  String get locationPaidOnly => 'Tambah lokasi tersedia di versi Paid';
+
+  @override
+  String get buildVariantFree => 'Gratis';
+
+  @override
+  String get buildVariantPaid => 'Berbayar';
 }
